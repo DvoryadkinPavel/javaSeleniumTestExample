@@ -17,7 +17,7 @@ public class ExampleTest {
     @BeforeClass
     public static void setup() {
         //определение пути до драйвера и его настройка
-        System.setProperty("webdriver.chrome.driver", "C:\\Chromedriver\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "/home/pasha/Chromedriver/chromedriver");
         //создание экземпляра драйвера
         driver = new ChromeDriver();
         //окно разворачивается на полный экран
