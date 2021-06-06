@@ -1,4 +1,4 @@
-package ru.mail.dvoryadkinpavel;
+package ru.mail.dvoryadkinpavel.helpers;
 
 import java.io.BufferedReader;
 import java.io.IOException;

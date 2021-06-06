@@ -6,6 +6,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import ru.mail.dvoryadkinpavel.helpers.AsyncExample;
+import ru.mail.dvoryadkinpavel.helpers.CommandRunner;
+import ru.mail.dvoryadkinpavel.helpers.FileReader;
 
 import java.io.FileInputStream;
 import java.io.IOException;
