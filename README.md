@@ -1,2 +1,2 @@
 # JavaSeleniumExample
-1 step web test
+with some helpers and logging
