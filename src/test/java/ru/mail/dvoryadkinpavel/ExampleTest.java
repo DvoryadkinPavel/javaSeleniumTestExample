@@ -61,12 +61,15 @@ public class ExampleTest {
         String apikey = FileReader.ReadToString("./src/test/Data/apikey.txt");
         Assert.assertTrue("Не удалось прочитать файл",apikey != "");
 
-        RestClientExample.GetActualWeatherJsonString(apikey);
-        var weather = RestClientExample.ParseJsonExample();
-        Assert.assertTrue("Не удалось распарсить JSON",weather!="");
-        Log.info(weather);
+        Thread task = AsyncExample.WeatherTask(apikey);
+        task.start();
+        while (task.isAlive()) {
+            Thread.sleep(1000);
+            System.out.println("weather info task is not finished yet...");
+        }
+        Log.info(AsyncExample.weather.get());
+        Assert.assertTrue("Не удалось распарсить JSON", AsyncExample.weather.get() != "");
 
-        Log.info("test passed");
 
     }
     /**
@@ -75,6 +78,7 @@ public class ExampleTest {
     @AfterClass
     public static void tearDown() {
         driver.quit();
+        Log.info("test passed");
         System.out.println("Test passed");
     }
 }
