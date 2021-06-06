@@ -6,6 +6,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
 
 public class ExampleTest {
@@ -29,9 +32,23 @@ public class ExampleTest {
      * тестовый метод для осуществления аутентификации
      */
     @Test
-    public void exampleTest() {
+    public void exampleTest() throws IOException, URISyntaxException, InterruptedException {
         driver.get("http://google.ru");
-        Assert.assertTrue("Что-то пошло не так",driver.getCurrentUrl().contains("google"));
+        Assert.assertTrue("Ошибка Selenium driver",driver.getCurrentUrl().contains("google"));
+
+        var currentDirectoryContent = CommandRunner.Run("ls");
+        Assert.assertTrue("Не удалось выполнить команду консоли",currentDirectoryContent != "");
+        System.out.println(currentDirectoryContent);
+
+
+        String apikey = FileReader.ReadToString("./src/test/Data/apikey.txt");
+        Assert.assertTrue("Не удалось прочитать файл",apikey != "");
+        System.out.println(apikey);
+
+        RestClientExample.GetActualWeatherJsonString(apikey);
+        var weather = RestClientExample.ParseJsonExample();
+        Assert.assertTrue("Не удалось распарсить JSON",weather!="");
+        System.out.println(weather);
     }
     /**
      * осуществление выхода из аккаунта с последующим закрытием окна браузера
