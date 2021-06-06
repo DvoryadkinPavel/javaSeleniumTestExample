@@ -39,6 +39,7 @@ public class ExampleTest {
     @BeforeClass
     public static void setup() {
         //определение пути до драйвера и его настройка
+        //System.setProperty("webdriver.chrome.driver", "C:\\Chromedriver\\chromedriver.exe");//for Windows
         System.setProperty("webdriver.chrome.driver", "/home/pasha/Chromedriver/chromedriver");
         //создание экземпляра драйвера
         driver = new ChromeDriver();
