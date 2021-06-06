@@ -7,11 +7,27 @@ import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 public class ExampleTest {
+    //Пример настройки логгера
+    static Logger Log;
+    private static final java.util.logging.LogManager LogManager = null;
+
+    static {
+        try(FileInputStream ins = new FileInputStream("log.config")){ //полный путь до файла с конфигами
+            LogManager.getLogManager().readConfiguration(ins);
+            Log = Logger.getLogger(ExampleTest.class.getName());
+        }catch (Exception ignore){
+            ignore.printStackTrace();
+        }
+    }
+    //------------------------
+
     public static WebDriver driver;
 
     /**
@@ -38,17 +54,20 @@ public class ExampleTest {
 
         var currentDirectoryContent = CommandRunner.Run("ls");
         Assert.assertTrue("Не удалось выполнить команду консоли",currentDirectoryContent != "");
-        System.out.println(currentDirectoryContent);
+        Log.info("Содержимое текущей директории:");
+        Log.info(currentDirectoryContent);
 
 
         String apikey = FileReader.ReadToString("./src/test/Data/apikey.txt");
         Assert.assertTrue("Не удалось прочитать файл",apikey != "");
-        System.out.println(apikey);
 
         RestClientExample.GetActualWeatherJsonString(apikey);
         var weather = RestClientExample.ParseJsonExample();
         Assert.assertTrue("Не удалось распарсить JSON",weather!="");
-        System.out.println(weather);
+        Log.info(weather);
+
+        Log.info("test passed");
+
     }
     /**
      * осуществление выхода из аккаунта с последующим закрытием окна браузера
