@@ -39,8 +39,13 @@ public class ExampleTest {
     @BeforeClass
     public static void setup() {
         //определение пути до драйвера и его настройка
-        System.setProperty("webdriver.chrome.driver", "C:\\Chromedriver\\chromedriver.exe");//for Windows
-        //System.setProperty("webdriver.chrome.driver", "/home/pasha/Chromedriver/chromedriver");
+        var os =System.getProperty("os.name");
+            if(os.contains("Windows")) {
+                System.setProperty("webdriver.chrome.driver", "C:\\Chromedriver\\chromedriver.exe");
+            }
+            else {
+                System.setProperty("webdriver.chrome.driver", "/home/pasha/Chromedriver/chromedriver");
+            }
         //создание экземпляра драйвера
         driver = new ChromeDriver();
         //окно разворачивается на полный экран
