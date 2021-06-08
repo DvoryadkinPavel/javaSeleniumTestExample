@@ -3,6 +3,7 @@ package ru.mail.dvoryadkinpavel.helpers;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 
 public class CommandRunner {
     /**запуск команды bash
@@ -10,15 +11,25 @@ public class CommandRunner {
      * @param command команда
      * @return вывод
      */
-    public static String Run(String command){
+    public static String Run(String command) throws UnsupportedEncodingException {
         Process process = null;
+        var encoding ="";
         try {
-            process = Runtime.getRuntime().exec("ls");
+            var os =System.getProperty("os.name");
+            if(os.contains("Windows")) {
+                process = Runtime.getRuntime().exec("cmd.exe /c "+command);
+                encoding = "Cp866";
+            }
+            else {
+                process = Runtime.getRuntime().exec(command);
+                encoding = "UTF-8";
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         BufferedReader reader = new BufferedReader(new InputStreamReader(
-                process.getInputStream()));
+                process.getInputStream(),encoding));
         String s = null;
         String y = "";
         while (true) {

@@ -39,8 +39,8 @@ public class ExampleTest {
     @BeforeClass
     public static void setup() {
         //определение пути до драйвера и его настройка
-        //System.setProperty("webdriver.chrome.driver", "C:\\Chromedriver\\chromedriver.exe");//for Windows
-        System.setProperty("webdriver.chrome.driver", "/home/pasha/Chromedriver/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "C:\\Chromedriver\\chromedriver.exe");//for Windows
+        //System.setProperty("webdriver.chrome.driver", "/home/pasha/Chromedriver/chromedriver");
         //создание экземпляра драйвера
         driver = new ChromeDriver();
         //окно разворачивается на полный экран
@@ -55,8 +55,14 @@ public class ExampleTest {
     public void exampleTest() throws IOException, URISyntaxException, InterruptedException {
         driver.get("http://google.ru");
         Assert.assertTrue("Ошибка Selenium driver",driver.getCurrentUrl().contains("google"));
-
-        var currentDirectoryContent = CommandRunner.Run("ls");
+        var currentDirectoryContent ="";
+        var os =System.getProperty("os.name");
+        if(os.contains("Windows")) {
+            currentDirectoryContent = CommandRunner.Run("dir");
+        }
+        else {
+            currentDirectoryContent = CommandRunner.Run("ls");
+        }
         Assert.assertTrue("Не удалось выполнить команду консоли",currentDirectoryContent != "");
         Log.info("Содержимое текущей директории:");
         Log.info(currentDirectoryContent);
@@ -74,7 +80,8 @@ public class ExampleTest {
         Log.info(AsyncExample.weather.get());
         Assert.assertTrue("Не удалось распарсить JSON", AsyncExample.weather.get() != "");
 
-
+        Log.info("test passed");
+        System.out.println("Test passed");
     }
     /**
      * осуществление выхода из аккаунта с последующим закрытием окна браузера
@@ -82,7 +89,5 @@ public class ExampleTest {
     @AfterClass
     public static void tearDown() {
         driver.quit();
-        Log.info("test passed");
-        System.out.println("Test passed");
     }
 }
